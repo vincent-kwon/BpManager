@@ -1,0 +1,3 @@
+interface remote_service {
+ int remote_send_sync(int remote_id, string body);
+}

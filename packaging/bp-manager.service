@@ -1,0 +1,20 @@
+[Unit]
+Description=Best Practice Tizen Manager
+
+[Service]
+User=app_fw
+Group=app_fw
+# TODO(vincent): what is relation between bus name and service.
+BusName=org.tizen.bp.manager
+Type=dbus
+ExecStart=/usr/bin/bp-manager
+SmackProcessLabel=System
+Capabilities=cap_sys_time=i
+SecureBits=keep-caps
+TimeoutStopSec=3s
+Restart=on-failure
+RestartSec=0
+
+[Install]
+WantedBy=multi-user.target
+

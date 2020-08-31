@@ -1,0 +1,5 @@
+[D-BUS Service]
+Name=@DBUS_INTERFACE@
+Exec=/bin/false
+# /usr/lib/systemd/system/bp-manager.service
+SystemdService=@SERVER@.service
