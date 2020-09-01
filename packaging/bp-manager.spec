@@ -171,7 +171,7 @@ echo %{_sysconfdir}
 %license LICENSE
 
 # TODO(vincent): what is this file???
-%config %{_sysconfdir}/dbus-1/system.d/bp-manager.conf
+%config %{_sysconfdir}/dbus-1/system.d/org.tizen.bp.manager.conf
 
 #%post -n bp-manager-unittests
 #%if 0%{?gcov:1}

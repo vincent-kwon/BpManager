@@ -1,5 +1,7 @@
+[Unit]
+Description=This is from /usr/share/system.d/system-service/org.tizen.bp.manager.service for DBUS
+
 [D-BUS Service]
-Name=@DBUS_INTERFACE@
+Name=org.tizen.bp.manager
 Exec=/bin/false
-# /usr/lib/systemd/system/bp-manager.service
-SystemdService=@SERVER@.service
+SystemdService=bp-manager.service

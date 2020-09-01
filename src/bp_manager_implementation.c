@@ -49,9 +49,9 @@ int main()
 #ifdef TIZEN_TEST_GCOV
 	setenv("GCOV_PREFIX", "/tmp/daemon", 1);
 #endif
-    _bpm_initialize();
 	// TODO(vincent): Why we need g_main_loop?
 	mainloop = g_main_loop_new(NULL, FALSE);
+	_bpm_initialize();
 	g_main_loop_run(mainloop);
 
 	return 0;

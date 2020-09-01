@@ -39,8 +39,8 @@ TARGET_LINK_LIBRARIES(${fw_name} ${${fw_name}_LDFLAGS})
 
 INSTALL(TARGETS ${fw_name} DESTINATION ${BIN_INSTALL_DIR})
 
-CONFIGURE_FILE(bp-manager.conf.in bp-manager.conf @ONLY)
-INSTALL(FILES bp-manager.conf DESTINATION ${SYSCONF_INSTALL_DIR}/dbus-1/system.d/)
+CONFIGURE_FILE(org.tizen.bp.manager.conf.in org.tizen.bp.manager.conf @ONLY)
+INSTALL(FILES org.tizen.bp.manager.conf DESTINATION ${SYSCONF_INSTALL_DIR}/dbus-1/system.d/)
 
 CONFIGURE_FILE(${DBUS_INTERFACE}.service.in ${DBUS_INTERFACE}.service @ONLY)
 INSTALL(FILES ${DBUS_INTERFACE}.service DESTINATION ${SHARE_INSTALL_PREFIX}/dbus-1/system-services/)

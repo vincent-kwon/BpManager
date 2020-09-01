@@ -16,20 +16,90 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <dlog.h>
+#include <unistd.h>
 #include <dbus/dbus.h>
 
-#define LOG_TAG "BP_TIZEN"
+#define LOG_TAG "BP_MANAGER"
 
 const char* bpm_bus_name =       "org.tizen.bp.manager";
 const char* bpm_object_path =    "/org/tizen/bp/manager";
 const char* bpm_interface_name = "org.tizen.bp.manager.interface";
 const char* bpm_method_name_1 = "get";
-//const char* bpm_signal_name_1 = "launch_new_application";
 
-// const char* interface_name_of_the_method = "bps.bp.methodinterface1.name";
-// const char* name_of_the_method = "bps.bp.method.name";
-// const char* interface_name_of_the_signal = "request.to.launcherdaemon";
-// const char* name_of_the_signal = "launch_new_application";
+const char* bp_manager_bus_name =       "org.tizen.bp.manager.tizen";
+const char* bp_manager_object_path =    "/org/tizen/bps/bp/tizen/manager/object";
+const char* bp_manager_interface_name = "org.tizen.bps.bp.manager.interface";
+const char* bp_manager_method_name_1 = "get";
+const char* param = "This must not be null";
+DBusPendingCall* pending;
+#if 0
+static int bptizen_handle_dbus_signal() 
+{
+	DBusMessage* msg;
+	DBusMessageIter args;
+	DBusConnection* conn;
+	DBusError err;
+
+	int ret = 0;
+	dbus_uint32_t serial = 0;
+	static int count = 0;
+
+	dlog_print(DLOG_INFO, LOG_TAG, "FUCK려차FUCK bptizen_handle_dbus_signal\n");
+    
+	// Initialize the error
+	dbus_error_init(&err);
+
+	// Connect to the bus and check for errors
+	conn = dbus_bus_get(DBUS_BUS_SYSTEM, &err);
+
+	// Check for dbus error
+	if (dbus_error_is_set(&err)) 
+	{
+		dlog_print(DLOG_INFO, LOG_TAG, "Connection Error (%s)\n", err.message);
+		dbus_error_free(&err);
+	}
+
+	if (NULL == conn) 
+	{
+		dlog_print(DLOG_INFO, LOG_TAG, "Connection Null\n");
+		exit(1);
+	}
+
+
+    // Try a method call
+	dlog_print(DLOG_INFO, LOG_TAG, "Start remote method call:: %s\n", bp_manager_bus_name);
+	msg = dbus_message_new_method_call(bp_manager_bus_name, // target for the method call
+	   	 	 	 	 	 	 	bp_manager_object_path, // object to call on
+	                            bp_manager_interface_name, // interface to call on
+    	                        bp_manager_method_name_1); // method name
+    dlog_print(DLOG_INFO, LOG_TAG, "End remote method call %s\n", bp_manager_bus_name);
+	// append arguments
+	dbus_message_iter_init_append(msg, &args);
+
+	if (!dbus_message_iter_append_basic(&args, DBUS_TYPE_STRING, &param)) {
+		dlog_print(DLOG_INFO, LOG_TAG, "Out Of Memory!\n");
+		exit(1);
+	}
+
+	// send message and get a handle for a reply
+	if (!dbus_connection_send_with_reply (conn, msg, &pending, -1)) { // -1 is default timeout
+		dlog_print(DLOG_INFO, LOG_TAG, "[Client] Out Of Memory!\n");
+		exit(1);
+	}
+	
+	dlog_print(DLOG_INFO, LOG_TAG, "sent message..dbus_connection_send_with_reply");
+
+	if (NULL == pending) {
+		dlog_print(DLOG_INFO, LOG_TAG, "[Client] Pending Call Null\n");
+		exit(1);
+	}
+	dbus_connection_flush(conn);
+
+	if (NULL == msg) {
+	    dlog_print(DLOG_INFO, LOG_TAG, "[Client] Message Null\n");
+		exit(1);
+	}
+}
 
 void reply_to_method_call(DBusMessage* msg, DBusConnection* conn)
 {
@@ -89,7 +159,7 @@ void reply_to_method_call(DBusMessage* msg, DBusConnection* conn)
    //Unref is done below
    //dbus_message_unref(reply);
 }
-
+#endif
 
 int bpm_tizen_dbus_server_run() 
 {
@@ -120,15 +190,16 @@ int bpm_tizen_dbus_server_run()
 	}
 
 	//request our name on the bus and check for errors
-	//ret = dbus_bus_request_name(conn, bpm_bus_name, DBUS_NAME_FLAG_REPLACE_EXISTING , &err);
+	ret = dbus_bus_request_name(conn, bpm_bus_name, DBUS_NAME_FLAG_REPLACE_EXISTING , &err);
 
 	//For request name, check error
-	//if (dbus_error_is_set(&err)) 
-	//{
-	//	dlog_print(DLOG_INFO, LOG_TAG, "Name Error (%s)\n", err.message);
-	//	dbus_error_free(&err);
-	//}
+	if (dbus_error_is_set(&err)) 
+	{
+		dlog_print(DLOG_INFO, LOG_TAG, "Fuck Name Error (%s)\n", err.message);
+		dbus_error_free(&err);
+	}
 
+    dlog_print(DLOG_INFO, LOG_TAG, "GOT Here !!!!!!!!!!!!!!!!!!!!\n");
 	//Check for primary for the requested name
 	//if (DBUS_REQUEST_NAME_REPLY_PRIMARY_OWNER != ret) 
 	//{
@@ -140,6 +211,7 @@ int bpm_tizen_dbus_server_run()
 	//dbus_bus_add_match(conn, "type='signal',interface='request.to.launcherdaemon'", &err); // see signals from the given interface
 	//dbus_connection_flush(conn);
 
+#if 0
 	//Wait for new message
 	while (true) 
 	{
@@ -155,11 +227,15 @@ int bpm_tizen_dbus_server_run()
     	//loop again if we haven't got a message
 		if (NULL == msg) 
 		{
-			//dlog_print(DLOG_INFO, LOG_TAG, "bpm method call received request is null.\n");
 			continue;
 		}
-         dlog_print(DLOG_INFO, LOG_TAG, "bpm method call received request is not null.\n");
-			
+        dlog_print(DLOG_INFO, LOG_TAG, "FUCK bpm method call received request is not null.\n");
+        dlog_print(DLOG_INFO, LOG_TAG, "bptizen_handle_dbus_signal call\n");
+		{
+			bptizen_handle_dbus_signal();
+		}
+		sleep(3000);
+
 		//check this is a method call for the right interface & method
 		if (dbus_message_is_method_call(msg, bpm_interface_name, bpm_method_name_1)) 
 		{
@@ -213,8 +289,9 @@ int bpm_tizen_dbus_server_run()
 		dbus_message_unref(msg);
 #endif		
     }
-        	// close the connection
-	dbus_connection_close(conn);
+#endif	
+    // close the connection
+	//dbus_connection_close(conn);
     return 0;
 }
 

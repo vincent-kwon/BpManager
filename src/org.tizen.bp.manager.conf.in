@@ -1,0 +1,17 @@
+<!DOCTYPE busconfig PUBLIC "-//freedesktop//DTD D-BUS Bus Configuration 1.0//EN"
+"http://www.freedesktop.org/standards/dbus/1.0/busconfig.dtd">
+<busconfig>
+	<policy user="root">
+		<allow own="org.tizen.bp.manager"/>
+		<allow send_destination="org.tizen.bp.manager"/>
+	</policy>
+	<policy user="app_fw">
+		<allow own="org.tizen.bp.manager"/>
+		<allow send_destination="org.tizen.bp.manager"/>
+	</policy>
+	<policy context="default">
+		<deny own="org.tizen.bp.manager"/>
+		<deny send_destination="org.tizen.bp.manager"  send_interface="org.tizen.bp.manager.interface"/>
+		<allow send_destination="org.tizen.bp.manager" send_type="signal" />
+	</policy>
+</busconfig>
