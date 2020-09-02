@@ -11,7 +11,7 @@
 	</policy>
 	<policy context="default">
 		<deny own="org.tizen.bp.manager"/>
-		<deny send_destination="org.tizen.bp.manager"  send_interface="org.tizen.bp.manager.interface"/>
-		<allow send_destination="org.tizen.bp.manager" send_type="signal" />
+		<allow send_destination="org.tizen.bp.manager"  send_interface="org.tizen.bp.manager.interface"/>
+		<deny send_destination="org.tizen.bp.manager" send_type="signal" />
 	</policy>
 </busconfig>

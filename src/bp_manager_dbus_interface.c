@@ -211,7 +211,7 @@ int bpm_tizen_dbus_server_run()
 	//dbus_bus_add_match(conn, "type='signal',interface='request.to.launcherdaemon'", &err); // see signals from the given interface
 	//dbus_connection_flush(conn);
 
-#if 0
+#if 1
 	//Wait for new message
 	while (true) 
 	{
@@ -224,24 +224,20 @@ int bpm_tizen_dbus_server_run()
 		dbus_connection_read_write(conn, 0);
 		msg = dbus_connection_pop_message(conn);
 		
+		//dlog_print(DLOG_INFO, LOG_TAG, "BP Got message.............\n");
+		
     	//loop again if we haven't got a message
 		if (NULL == msg) 
 		{
 			continue;
 		}
-        dlog_print(DLOG_INFO, LOG_TAG, "FUCK bpm method call received request is not null.\n");
-        dlog_print(DLOG_INFO, LOG_TAG, "bptizen_handle_dbus_signal call\n");
-		{
-			bptizen_handle_dbus_signal();
-		}
-		sleep(3000);
-
+        
 		//check this is a method call for the right interface & method
 		if (dbus_message_is_method_call(msg, bpm_interface_name, bpm_method_name_1)) 
 		{
 		     //reply_to_method_call(msg, conn);
-			dlog_print(DLOG_INFO, LOG_TAG, "bpm received request for %s %s\n", bpm_interface_name, bpm_method_name_1);
-			reply_to_method_call(msg, conn);
+			dlog_print(DLOG_INFO, LOG_TAG, "Finally!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!bpm received request for %s %s\n", bpm_interface_name, bpm_method_name_1);
+			//reply_to_method_call(msg, conn);
 			break;
 		}
 #if 0

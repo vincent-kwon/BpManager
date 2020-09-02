@@ -23,7 +23,7 @@
 #undef LOG_TAG
 #endif
 
-#define LOG_TAG "BPS_bpm_TIZEN"
+#define LOG_TAG "BP_MANAGER"
 
 extern int bpm_tizen_dbus_server_run();
 
@@ -52,7 +52,8 @@ int main()
 	// TODO(vincent): Why we need g_main_loop?
 	mainloop = g_main_loop_new(NULL, FALSE);
 	_bpm_initialize();
-	g_main_loop_run(mainloop);
+	//g_main_loop_run(mainloop);
 
 	return 0;
 }
+
