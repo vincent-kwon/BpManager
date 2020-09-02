@@ -7,11 +7,10 @@
 	</policy>
 	<policy user="app_fw">
 		<allow own="org.tizen.bp.manager"/>
-		<allow send_destination="org.tizen.bp.manager"/>
+		<allow send_destination="org.tizen.bp.manager" send_interface="org.tizen.bp.manager.interface" send_member="get"/>
 	</policy>
 	<policy context="default">
 		<deny own="org.tizen.bp.manager"/>
-		<allow send_destination="org.tizen.bp.manager"  send_interface="org.tizen.bp.manager.interface"/>
-		<deny send_destination="org.tizen.bp.manager" send_type="signal" />
+		<allow send_destination="org.tizen.bp.manager"  send_interface="org.tizen.bp.manager.interface" send_member="get"/>
 	</policy>
 </busconfig>
