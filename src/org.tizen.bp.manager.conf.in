@@ -2,15 +2,18 @@
 "http://www.freedesktop.org/standards/dbus/1.0/busconfig.dtd">
 <busconfig>
 	<policy user="root">
+		<allow send_destination="org.tizen.bp.manager"/>
+	</policy>
+	<policy group="users">
+        <allow send_destination="org.tizen.bp.manager"/>
+    </policy>
+	<policy user="app_fw">
 		<allow own="org.tizen.bp.manager"/>
 		<allow send_destination="org.tizen.bp.manager"/>
 	</policy>
-	<policy user="app_fw">
-		<allow own="org.tizen.bp.manager"/>
-		<allow send_destination="org.tizen.bp.manager" send_interface="org.tizen.bp.manager.interface" send_member="get"/>
-	</policy>
 	<policy context="default">
 		<deny own="org.tizen.bp.manager"/>
-		<allow send_destination="org.tizen.bp.manager"  send_interface="org.tizen.bp.manager.interface" send_member="get"/>
+		<deny  send_destination="org.tizen.bp.manager"/>
+		<check send_destination="org.tizen.bp.manager"  send_interface="org.tizen.bp.manager.interface" send_member="get" privilege="http://tizen.org/privilege/alarm.set"/>
 	</policy>
 </busconfig>
